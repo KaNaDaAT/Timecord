@@ -1,0 +1,598 @@
+﻿<meta charset="utf-8"/>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.16.0/dist/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+<style type="text/css">
+	.bootstrap-table .fixed-table-toolbar::after {
+		content: "";
+		display: block;
+		clear: both
+	}
+
+	.bootstrap-table .fixed-table-toolbar .bs-bars,
+	.bootstrap-table .fixed-table-toolbar .columns,
+	.bootstrap-table .fixed-table-toolbar .search {
+		position: relative;
+		margin-top: 10px;
+		margin-bottom: 10px
+	}
+
+	.bootstrap-table .fixed-table-toolbar .columns .btn-group>.btn-group {
+		display: inline-block;
+		margin-left: -1px!important
+	}
+
+	.bootstrap-table .fixed-table-toolbar .columns .btn-group>.btn-group>.btn {
+		border-radius: 0
+	}
+
+	.bootstrap-table .fixed-table-toolbar .columns .btn-group>.btn-group:first-child>.btn {
+		border-top-left-radius: 4px;
+		border-bottom-left-radius: 4px
+	}
+
+	.bootstrap-table .fixed-table-toolbar .columns .btn-group>.btn-group:last-child>.btn {
+		border-top-right-radius: 4px;
+		border-bottom-right-radius: 4px
+	}
+
+	.bootstrap-table .fixed-table-toolbar .columns .dropdown-menu {
+		text-align: left;
+		max-height: 300px;
+		overflow: auto;
+		-ms-overflow-style: scrollbar;
+		z-index: 1001
+	}
+
+	.bootstrap-table .fixed-table-toolbar .columns label {
+		display: block;
+		padding: 3px 20px;
+		clear: both;
+		font-weight: 400;
+		line-height: 1.428571429
+	}
+
+	.bootstrap-table .fixed-table-toolbar .columns-left {
+		margin-right: 5px
+	}
+
+	.bootstrap-table .fixed-table-toolbar .columns-right {
+		margin-left: 5px
+	}
+
+	.bootstrap-table .fixed-table-toolbar .pull-right .dropdown-menu {
+		right: 0;
+		left: auto
+	}
+
+	.bootstrap-table .fixed-table-container {
+		position: relative;
+		clear: both
+	}
+
+	.bootstrap-table .fixed-table-container .table {
+		width: 100%;
+		margin-bottom: 0!important
+	}
+
+	.bootstrap-table .fixed-table-container .table td,
+	.bootstrap-table .fixed-table-container .table th {
+		vertical-align: middle;
+		box-sizing: border-box
+	}
+
+	.bootstrap-table .fixed-table-container .table thead th {
+		vertical-align: bottom;
+		padding: 0;
+		margin: 0
+	}
+
+	.bootstrap-table .fixed-table-container .table thead th:focus {
+		outline: 0 solid transparent
+	}
+
+	.bootstrap-table .fixed-table-container .table thead th.detail {
+		width: 30px
+	}
+
+	.bootstrap-table .fixed-table-container .table thead th .th-inner {
+		padding: .75rem;
+		vertical-align: bottom;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap
+	}
+
+	.bootstrap-table .fixed-table-container .table thead th .sortable {
+		cursor: pointer;
+		background-position: right;
+		background-repeat: no-repeat;
+		padding-right: 30px!important
+	}
+
+	.bootstrap-table .fixed-table-container .table thead th .both {
+		background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAQAAADYWf5HAAAAkElEQVQoz7X QMQ5AQBCF4dWQSJxC5wwax1Cq1e7BAdxD5SL+Tq/QCM1oNiJidwox0355mXnG/DrEtIQ6azioNZQxI0ykPhTQIwhCR+BmBYtlK7kLJYwWCcJA9M4qdrZrd8pPjZWPtOqdRQy320YSV17OatFC4euts6z39GYMKRPCTKY9UnPQ6P+GtMRfGtPnBCiqhAeJPmkqAAAAAElFTkSuQmCC")
+	}
+
+	.bootstrap-table .fixed-table-container .table thead th .asc {
+		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAAZ0lEQVQ4y2NgGLKgquEuFxBPAGI2ahhWCsS/gDibUoO0gPgxEP8H4ttArEyuQYxAPBdqEAxPBImTY5gjEL9DM+wTENuQahAvEO9DMwiGdwAxOymGJQLxTyD+jgWDxCMZRsEoGAVoAADeemwtPcZI2wAAAABJRU5ErkJggg==)
+	}
+
+	.bootstrap-table .fixed-table-container .table thead th .desc {
+		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAAZUlEQVQ4y2NgGAWjYBSggaqGu5FA/BOIv2PBIPFEUgxjB+IdQPwfC94HxLykus4GiD+hGfQOiB3J8SojEE9EM2wuSJzcsFMG4ttQgx4DsRalkZENxL+AuJQaMcsGxBOAmGvopk8AVz1sLZgg0bsAAAAASUVORK5CYII=)
+	}
+
+	.bootstrap-table .fixed-table-container .table tbody tr.selected td {
+		background-color: rgba(0, 0, 0, .075)
+	}
+
+	.bootstrap-table .fixed-table-container .table tbody tr.no-records-found td {
+		text-align: center
+	}
+
+	.bootstrap-table .fixed-table-container .table tbody tr .card-view {
+		display: flex
+	}
+
+	.bootstrap-table .fixed-table-container .table tbody tr .card-view .card-view-title {
+		font-weight: 700;
+		display: inline-block;
+		min-width: 30%;
+		text-align: left!important
+	}
+
+	.bootstrap-table .fixed-table-container .table .bs-checkbox {
+		text-align: center
+	}
+
+	.bootstrap-table .fixed-table-container .table .bs-checkbox label {
+		margin-bottom: 0
+	}
+
+	.bootstrap-table .fixed-table-container .table .bs-checkbox label input[type=checkbox],
+	.bootstrap-table .fixed-table-container .table .bs-checkbox label input[type=radio] {
+		margin: 0 auto!important
+	}
+
+	.bootstrap-table .fixed-table-container .table.table-sm .th-inner {
+		padding: .3rem
+	}
+
+	.bootstrap-table .fixed-table-container.fixed-height:not(.has-footer) {
+		border-bottom: 1px solid #dee2e6
+	}
+
+	.bootstrap-table .fixed-table-container.fixed-height.has-card-view {
+		border-top: 1px solid #dee2e6;
+		border-bottom: 1px solid #dee2e6
+	}
+
+	.bootstrap-table .fixed-table-container.fixed-height .fixed-table-border {
+		border-left: 1px solid #dee2e6;
+		border-right: 1px solid #dee2e6
+	}
+
+	.bootstrap-table .fixed-table-container.fixed-height .table thead th {
+		border-bottom: 1px solid #dee2e6
+	}
+
+	.bootstrap-table .fixed-table-container.fixed-height .table-dark thead th {
+		border-bottom: 1px solid #32383e
+	}
+
+	.bootstrap-table .fixed-table-container .fixed-table-header {
+		overflow: hidden
+	}
+
+	.bootstrap-table .fixed-table-container .fixed-table-body .fixed-table-loading {
+		align-items: center;
+		background: #fff;
+		display: none;
+		justify-content: center;
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		z-index: 1000
+	}
+
+	.bootstrap-table .fixed-table-container .fixed-table-body .fixed-table-loading .loading-wrap {
+		align-items: baseline;
+		display: flex;
+		justify-content: center
+	}
+
+	.bootstrap-table .fixed-table-container .fixed-table-body .fixed-table-loading .loading-wrap .loading-text {
+		font-size: 2rem;
+		margin-right: 6px
+	}
+
+	.bootstrap-table .fixed-table-container .fixed-table-body .fixed-table-loading .loading-wrap .animation-wrap {
+		align-items: center;
+		display: flex;
+		justify-content: center
+	}
+
+	.bootstrap-table .fixed-table-container .fixed-table-body .fixed-table-loading .loading-wrap .animation-dot,
+	.bootstrap-table .fixed-table-container .fixed-table-body .fixed-table-loading .loading-wrap .animation-wrap::after,
+	.bootstrap-table .fixed-table-container .fixed-table-body .fixed-table-loading .loading-wrap .animation-wrap::before {
+		content: "";
+		animation-duration: 1.5s;
+		animation-iteration-count: infinite;
+		animation-name: LOADING;
+		background: #212529;
+		border-radius: 50%;
+		display: block;
+		height: 5px;
+		margin: 0 4px;
+		opacity: 0;
+		width: 5px
+	}
+
+	.bootstrap-table .fixed-table-container .fixed-table-body .fixed-table-loading .loading-wrap .animation-dot {
+		animation-delay: .3s
+	}
+
+	.bootstrap-table .fixed-table-container .fixed-table-body .fixed-table-loading .loading-wrap .animation-wrap::after {
+		animation-delay: .6s
+	}
+
+	.bootstrap-table .fixed-table-container .fixed-table-body .fixed-table-loading.table-dark {
+		background: #212529
+	}
+
+	.bootstrap-table .fixed-table-container .fixed-table-body .fixed-table-loading.table-dark .animation-dot,
+	.bootstrap-table .fixed-table-container .fixed-table-body .fixed-table-loading.table-dark .animation-wrap::after,
+	.bootstrap-table .fixed-table-container .fixed-table-body .fixed-table-loading.table-dark .animation-wrap::before {
+		background: #fff
+	}
+
+	.bootstrap-table .fixed-table-container .fixed-table-footer {
+		overflow: hidden
+	}
+
+	.bootstrap-table .fixed-table-pagination::after {
+		content: "";
+		display: block;
+		clear: both
+	}
+
+	.bootstrap-table .fixed-table-pagination>.pagination,
+	.bootstrap-table .fixed-table-pagination>.pagination-detail {
+		margin-top: 10px;
+		margin-bottom: 10px
+	}
+
+	.bootstrap-table .fixed-table-pagination>.pagination-detail .pagination-info {
+		line-height: 34px;
+		margin-right: 5px
+	}
+
+	.bootstrap-table .fixed-table-pagination>.pagination-detail .page-list {
+		display: inline-block
+	}
+
+	.bootstrap-table .fixed-table-pagination>.pagination-detail .page-list .btn-group {
+		position: relative;
+		display: inline-block;
+		vertical-align: middle
+	}
+
+	.bootstrap-table .fixed-table-pagination>.pagination-detail .page-list .btn-group .dropdown-menu {
+		margin-bottom: 0
+	}
+
+	.bootstrap-table .fixed-table-pagination>.pagination ul.pagination {
+		margin: 0
+	}
+
+	.bootstrap-table .fixed-table-pagination>.pagination ul.pagination a {
+		padding: 6px 12px;
+		line-height: 1.428571429
+	}
+
+	.bootstrap-table .fixed-table-pagination>.pagination ul.pagination li.page-intermediate a {
+		color: #c8c8c8
+	}
+
+	.bootstrap-table .fixed-table-pagination>.pagination ul.pagination li.page-intermediate a::before {
+		content: '\2B05'
+	}
+
+	.bootstrap-table .fixed-table-pagination>.pagination ul.pagination li.page-intermediate a::after {
+		content: '\27A1'
+	}
+
+	.bootstrap-table .fixed-table-pagination>.pagination ul.pagination li.disabled a {
+		pointer-events: none;
+		cursor: default
+	}
+
+	.bootstrap-table.fullscreen {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 1050;
+		width: 100%!important;
+		background: #fff;
+		height: calc(100vh);
+		overflow-y: scroll
+	}
+
+	div.fixed-table-scroll-inner {
+		width: 100%;
+		height: 200px
+	}
+
+	div.fixed-table-scroll-outer {
+		top: 0;
+		left: 0;
+		visibility: hidden;
+		width: 200px;
+		height: 150px;
+		overflow: hidden
+	}
+
+	@keyframes LOADING {
+		0% {
+			opacity: 0
+		}
+		50% {
+			opacity: 1
+		}
+		to {
+			opacity: 0
+		}
+	}
+</style>
+<style type="text/css">
+	.word-wrap {
+		word-break: break-word;
+		word-wrap: break-word;
+		overflow-wrap: break-word; 
+	}
+	body {
+		overflow: scroll;
+		-ms-overflow-style: none;
+		border-collapse: collapse;
+	}
+	th {
+		border: 1px solid #ddd;	
+		position: -webkit-sticky;
+		position: sticky;
+		top: -3;
+		z-index: 5;
+		background: #ffffff;
+	}
+</style>
+
+<div id="total">
+	<table id="table" data-row-style="rowStyle">
+		<thead>
+			<tr>
+				<th data-field="userStory" data-sortable="true" data-cell-style="cellStyle">UserStory</th>
+				<th data-field="participant" data-sortable="true">Teilnehmer</th>
+				<th data-field="working" data-sortable="true" class="word-wrap">Arbeit</th>
+				<th data-field="estimatedTime" data-sortable="true" data-sorter="timeSorter" data-align="center">Geplant</th>
+				<th data-field="startDate" data-sortable="true" data-sorter="dateSorter">Start</th>
+				<th data-field="endDate" data-sortable="true" data-sorter="dateSorter">Ende</th>
+				<th data-field="realTime" data-sortable="true" data-sorter="timeSorter" data-align="center">Tatsächlich</th>
+				<th data-field="breakTime" data-sortable="true" data-sorter="timeSorter" data-align="center">Pause</th>
+				<th data-field="deviation" data-sortable="true" data-sorter="timeSorter" data-align="center">Abweichung</th>
+				<th data-field="percentProgress" data-sortable="true" data-sorter="progressSorter">Fortschritt</th>
+			</tr>
+		</thead>
+	</table>
+</div>
+<!--
+<div style="padding-top: 50px;" width="100%" height="100%">
+	<div width="100%" height="100%" style="float: left; page-break-inside: never; page-break-before: always; text-align: center; padding: 0px 20px 0px 20px; margin: 10px 10px 10px 10px;">
+		<canvas id="myChart" width="100%" height="100%"></canvas>
+		<script>
+			var ctx = document.getElementById('myChart').getContext('2d');
+			var myChart = new Chart(ctx, {
+				type: 'pie',
+				data: {
+					labels: ['Spiel Dokumentation', 'Unity Spiel GUI', 'Rechere', 'Server Implementierung'],
+					datasets: [{
+						label: '',
+						data: [3.5, 14.2, 2, 0.75],
+						backgroundColor: [
+							'rgba(255, 99, 132, 0.9)',
+							'rgba(54, 162, 235, 0.9)',
+							'rgba(255, 206, 86, 0.9)',
+							'rgba(75, 192, 192, 0.9)',
+						],
+						borderColor: [
+							'rgba(255, 99, 132, 1)',
+							'rgba(54, 162, 235, 1)',
+							'rgba(255, 206, 86, 1)',
+							'rgba(75, 192, 192, 1)',
+						],
+						borderWidth: 1
+					}]
+				}
+			});
+		</script>
+		Kalian Danzer - Stunden pro UserStory
+	</div>
+	<div style="float: left; page-break-inside: never; page-break-before: always; text-align: center; padding: 0px 20px 0px 20px; margin: 10px 10px 10px 10px;">
+		<canvas id="myChart2" width="100%" height="100%"></canvas>
+		<script>
+			var ctx = document.getElementById('myChart2').getContext('2d');
+			var myChart = new Chart(ctx, {
+				type: 'pie',
+				data: {
+					labels: ['Spiel Dokumentation', 'Unity Spiel GUI', 'Rechere', 'Server Implementierung'],
+					datasets: [{
+						label: '',
+						data: [3.5, 14.2, 2, 0.75],
+						backgroundColor: [
+							'rgba(255, 99, 132, 0.9)',
+							'rgba(54, 162, 235, 0.9)',
+							'rgba(255, 206, 86, 0.9)',
+							'rgba(75, 192, 192, 0.9)',
+						],
+						borderColor: [
+							'rgba(255, 99, 132, 1)',
+							'rgba(54, 162, 235, 1)',
+							'rgba(255, 206, 86, 1)',
+							'rgba(75, 192, 192, 1)',
+						],
+						borderWidth: 1
+					}]
+				}
+			});
+		</script>
+		Nils Brugger - Stunden pro UserStory
+	</div>
+	-->
+</div>
+
+<script>
+	var $table = $('#table');
+	var backgroundColor = {
+	};
+
+	function cellStyle(value, row, index) {
+		for(var key in backgroundColor) {
+			var bc = backgroundColor[key];
+			if(key == value) {
+				return {
+					css: {
+						'background-color': bc.back,
+						'color' : bc.text
+					}
+				}
+			}
+		}
+		return {
+		}
+	}
+
+	function rowStyle(row, index) {
+		return {
+			css: {
+				'page-break-inside': 'avoid',
+				'page-break-before': 'auto',
+			}
+		}
+	}
+
+	function progressSorter(a, b) {
+		var aa = a.replace('%', '');
+		var bb = b.replace('%', '');
+		return aa - bb
+	}
+	
+	function dateSorter(a, b) {
+		var aa = new Date(
+			a.substring(6, 10),
+			a.substring(3, 5),
+			a.substring(0, 2),
+			a.substring(11, 13),
+			a.substring(14, 16)
+		).getTime();
+		var bb = new Date(
+			b.substring(6, 10),
+			b.substring(3, 5),
+			b.substring(0, 2),
+			b.substring(11, 13),
+			b.substring(14, 16)
+		).getTime();
+		return aa - bb
+	}
+
+	function timeSorter(a, b) {
+		var aa = new Date(0, 0, 0,
+			a.substring(0, 2),
+			a.substring(3, 5)
+		).getTime();
+		var bb = new Date(0, 0, 0,
+			b.substring(0, 2),
+			b.substring(3, 5)
+		).getTime();
+		return aa - bb;
+	}
+
+	$(function() {
+		var data = [
+		];
+		var sort = [
+			{
+				"sortName": "userStory",
+				"sortOrder": "asc"
+			}, 
+			{
+				"sortName": "startDate",
+				"sortOrder": "asc"
+			}
+		]
+		var order = "desc";
+		var lastColumn = "";
+		var orderOfFirstColumn = "asc";
+		$table.bootstrapTable({
+			onSort: function(name) {
+				if(name == "userStory") {
+					if(orderOfFirstColumn == "asc")
+						orderOfFirstColumn = "desc";
+					else 
+						orderOfFirstColumn = "asc";
+					sort = [
+						{
+          					"sortName": "userStory",
+          					"sortOrder": orderOfFirstColumn
+        				}
+					]
+				} else {
+					if(lastColumn == name) {
+						if(order == "desc") {
+							order = "asc";
+						} else {
+							order = "desc";
+						}
+					} else {
+						lastColumn = name;
+						order = "desc";
+					}
+					sort = [
+						{
+          					"sortName": "userStory",
+          					"sortOrder": orderOfFirstColumn
+        				}, 
+						{
+          					"sortName": name,
+          					"sortOrder": order
+        				}
+					]
+				}
+				$table.bootstrapTable('multiSort', sort);
+				$table.bootstrapTable('refresh');
+			},
+			onLoadSuccess: function(data) {
+				alert("Aldar!");
+				var table = document.getElementById("total").innerHTML;
+				document.getElementById("total").innerHTML = table + 
+					"\n<tr>" +
+					"\n<td>Total</td>" +
+					"\n<td>Kalian Danzer</td>" +
+					"\n<td>-</td>" +
+					"\n<td>03:20</td>" +
+					"\n<td>-</td>" +
+					"\n<td>-</td>" +
+					"\n<td>07:23</td>" +
+					"\n<td>05:03</td>" +
+					"\n<td>03:25</td>" +
+					"\n<td>37%</td>" +
+					"</tr>";
+			},
+			sortPriority: sort,
+			data: data,
+		})
+		//$table-marker
+	})
+</script>
